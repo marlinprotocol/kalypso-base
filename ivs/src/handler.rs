@@ -25,6 +25,16 @@ async fn check_enc_handler(_payload: web::Json<common::EncryptedInputPayload>) -
     )
 }
 
+#[post("/checkInputsWithSignature")]
+async fn check_input_with_signature(_payload: web::Json<common::AskPayload>) -> impl Responder {
+    // use common::secret_inputs_helpers to read encryptions and decryptions
+    common::response(
+        "Check Inputs with signature is not implemented",
+        StatusCode::NOT_IMPLEMENTED,
+        None,
+    )
+}
+
 pub fn routes(conf: &mut web::ServiceConfig) {
     let scope = web::scope("/api")
         .service(test)

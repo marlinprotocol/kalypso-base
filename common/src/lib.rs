@@ -78,3 +78,10 @@ pub struct EncryptedInputPayload {
 }
 
 pub mod secret_inputs_helpers;
+
+#[derive(Serialize, Debug, Deserialize)]
+pub struct AskPayload {
+    pub ask_id: u64,
+    pub encrypted_secret: String,
+    pub acl: String,
+}
