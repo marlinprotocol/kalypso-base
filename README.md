@@ -1,3 +1,3 @@
 # kalypso-base
 
-Base images for `prover` and `ivs`
+Base executables for `prover` and `ivs`
