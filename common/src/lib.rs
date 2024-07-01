@@ -54,20 +54,31 @@ pub fn response(
     response_handler.create_http_response()
 }
 
-use bindings::shared_types::Ask;
-
-#[derive(Serialize, Debug, Deserialize)]
-pub struct GenerateProofInputs {
-    pub ask: Ask,
-    pub private_inputs: Vec<u8>,
-    pub ask_id: u64,
-}
-
 #[derive(Serialize, Debug, Deserialize)]
 pub struct InputPayload {
     pub public: String,
-    pub secrets: Option<String>,
+    #[cfg(feature = "confidential")]
+    pub secrets: String,
 }
+
+#[derive(Serialize, Debug, Deserialize)]
+pub struct CheckInputResponse {
+    pub valid: bool,
+}
+
+#[derive(Serialize, Debug, Deserialize)]
+pub struct GenerateProofResponse {
+    pub proof: String,
+}
+
+#[derive(Serialize)]
+pub struct InvalidInputPayload {
+    pub ask_id: String,
+    pub public: String,
+    #[cfg(feature = "confidential")]
+    pub secrets: String,
+}
+pub mod secret_inputs_helpers;
 
 #[derive(Serialize, Debug, Deserialize)]
 pub struct EncryptedInputPayload {
@@ -75,13 +86,4 @@ pub struct EncryptedInputPayload {
     pub encrypted_secrets: String,
     pub me_decryption_url: String,
     pub market_id: String,
-}
-
-pub mod secret_inputs_helpers;
-
-#[derive(Serialize, Debug, Deserialize)]
-pub struct AskPayload {
-    pub ask_id: u64,
-    pub encrypted_secret: String,
-    pub acl: String,
 }
